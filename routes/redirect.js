@@ -8,8 +8,10 @@ router.get('/', function (req, res, next) {
     delete req.query.path
 
     let redirectUrl = `${url}/${path}`
+    let isFirst = true
     for (let key in req.query) {
-        redirectUrl += "&" + key + "=" + req.query[key]
+        redirectUrl += (isFirst ? "?" : "&") + key + "=" + req.query[key]
+        isFirst = false
     }
 
     res.redirect(redirectUrl)
