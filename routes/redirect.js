@@ -3,9 +3,16 @@ var router = express.Router()
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    const {url,path,code} = req.query
+    const {url, path} = req.query
+    delete req.query.url
+    delete req.query.path
 
-    res.redirect(`${url}/${path}?code=${code}`)
+    let redirectUrl = `${url}/${path}`
+    for (let key in req.query) {
+        redirectUrl += "&" + key + "=" + req.query[key]
+    }
+
+    res.redirect(redirectUrl)
 })
 
 module.exports = router
